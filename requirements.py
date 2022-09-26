@@ -1,0 +1,14 @@
+alembic==1.8.1
+click==7.1.2
+Flask==1.1.4
+Flask-Migrate==2.0.2
+Flask-Script==2.0.5
+Flask-SQLAlchemy==2.5.1
+greenlet==1.1.3
+itsdangerous==1.1.0
+Jinja2==2.11.3
+Mako==1.2.3
+MarkupSafe==2.0.1
+pyserial==3.5
+SQLAlchemy==1.4.41
+Werkzeug==1.0.1
