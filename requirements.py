@@ -1,3 +1,4 @@
+Adafruit-DHT==1.4.0
 alembic==1.8.1
 aniso8601==9.0.1
 certifi==2022.9.24
