@@ -10,6 +10,12 @@ from flask_restful import Api
 from flask import request, Flask
 from flask_discoverer import Discoverer
 
+log_level_info = {'DEBUG': logging.DEBUG, 
+                  'INFO': logging.INFO,
+                  'WARNING': logging.WARNING,
+                  'ERROR': logging.ERROR,
+                 }
+
 def create_app(**config):
     """
     Create the application and return it to the user
@@ -19,6 +25,8 @@ def create_app(**config):
     app = Flask(__name__)
     app.url_map.strict_slashes = False
     app.config.from_pyfile('../config.py')
+    logger = app.logger.config('LOGGING_LEVEL', 'INFO')
+    app.logger.setLevel(log_level[logger])
 
     # Register extensions
     api = Api(app)

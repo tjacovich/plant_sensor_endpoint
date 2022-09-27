@@ -17,12 +17,11 @@ class TemperatureView(Resource):
     def get_temperature(self, dhtDevice, celsius=True):
         retries = current_app.config.get("N_RETRIES", 3)
         tries = 0
-        logger.info("Attempting to read temperature try: {}/{}".format(tries, retries))
         while tries < retries:
-            current_app.logger.info("Getting temperature")
+            current_app.logger.info("Attempting to read temperature try: {}/{}".format(tries, retries))
             try:
                 if celsius: 
-                    temperature_c = dhtDevice.temperature
+                    temperature = dhtDevice.temperature
                 else:
                     temperature = dhtDevice.temperature * (9 / 5) + 32
                 return {"temperature": temperature}
@@ -35,6 +34,7 @@ class TemperatureView(Resource):
                 continue
 
             except Exception as error:
+                current_app.logger.error(error.args[0])
                 break
         
         current_app.logger.error("Failed Collect Temperature from sensor")
