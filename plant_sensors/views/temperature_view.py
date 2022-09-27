@@ -38,7 +38,7 @@ class TemperatureView(Resource):
 
         return {"error":"Failed Collect Temperature from sensor"}, 500
 
-    def get():
+    def get(self):
         dhtDevice = self.init_connection()
         response = self.get_temperature(dhtDevice)
         dhtDevice.exit()
