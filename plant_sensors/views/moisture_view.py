@@ -9,6 +9,7 @@ class MoistureView(Resource):
     @classmethod
     def init_connection(self):
         # open a serial connection
+        current_app.logger.info("Initializing connection to Pico")
         device_location = current_app.config.get("DEVICE_LOCATION", "/dev/ttyACM0")
         s = serial.Serial(device_location, 115200)
         s.timeout = 3
@@ -16,12 +17,13 @@ class MoistureView(Resource):
     
     @classmethod
     def poll_sensor(self, connection):
+        current_app.logger.info("Sending command to device")
         connection.write(b"take reading\n")
         readings = connection.readline().strip().split()
         try:
             readings_json = {"moisture content": float(readings[0]), "raw": int(readings[1])}
-        except:
-            current_app.logger.error('Failed to retrieve reading from Moisture Sensor')
+        except Exception as e:
+            current_app.logger.error('Failed to retrieve reading from Moisture Sensor with error {}'.format(e))
             readings_json = {"error":"Failed to retrieve reading from Moisture Sensor"}
         return readings_json
     
