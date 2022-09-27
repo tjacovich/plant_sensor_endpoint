@@ -15,7 +15,7 @@ class TemperatureView(Resource):
         return adafruit_dht.DHT11(pin)
 
     def get_temperature(self, dhtDevice, celsius=True):
-        retries=current_app.logger.config.get("N_RETRIES", 3)
+        retries=current_app.config.get("N_RETRIES", 3)
 
         while tries <= retries:
             try:
