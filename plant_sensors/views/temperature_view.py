@@ -11,14 +11,14 @@ import adafruit_dht
 class TemperatureView(Resource):
     @classmethod
     def init_connection(self, pin=board.D4):
-        # Initial the dht device, with data pin connected to:
+        # Initialize the dht device
         return adafruit_dht.DHT11(pin)
 
     def get_temperature(self, dhtDevice, celsius=True):
         retries = current_app.config.get("N_RETRIES", 3)
         tries = 0
         while tries < retries:
-            current_app.logger.info("Attempting to read temperature try: {}/{}".format(tries, retries))
+            current_app.logger.info("Attempting to read temperature try: {}/{}".format(tries+1, retries))
             try:
                 if celsius: 
                     temperature = dhtDevice.temperature
@@ -37,7 +37,7 @@ class TemperatureView(Resource):
                 current_app.logger.error(error.args[0])
                 break
         
-        current_app.logger.error("Failed Collect Temperature from sensor")
+        current_app.logger.error("Failed to collect Temperature from sensor")
 
         return {"error":"Failed Collect Temperature from sensor"}
 
