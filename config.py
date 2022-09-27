@@ -1,1 +1,2 @@
 DEVICE_LOCATION = "/dev/ttyACM0"
+N_RETRIES = 3
