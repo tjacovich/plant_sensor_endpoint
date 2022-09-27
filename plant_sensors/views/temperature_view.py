@@ -17,6 +17,7 @@ class TemperatureView(Resource):
     def get_temperature(self, dhtDevice, celsius=True):
         retries = current_app.config.get("N_RETRIES", 3)
         tries = 0
+        logger.info("Attempting to read temperature try: {}/{}".format(tries, retries))
         while tries < retries:
             current_app.logger.info("Getting temperature")
             try:
