@@ -9,6 +9,7 @@ import board
 import adafruit_dht
 from .base_view import BaseView
 import sys
+import time
 
 class HumidityView(BaseView):
     @classmethod
@@ -19,7 +20,7 @@ class HumidityView(BaseView):
             try:
                 pin_name = getattr(sys.modules["board"], location)
             except:
-                current_app.logger.warning("Could not get pin name")
+                current_app.logger.warning("Could not get pin name. Assuming pin D4")
                 pin_name = board.D4
         except:
             current_app.logger.error("Failed to set pin name. Stopping.")
