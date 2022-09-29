@@ -5,7 +5,7 @@ from flask_restful import Resource
 class BaseView(Resource):
     @classmethod
     def get_sensor_list(self):
-        sensor_list_file = current_app.config.get("SENSOR_LIST_FILE", current_app.root_path()+"/sensor_files/current_list.conf")
+        sensor_list_file = current_app.config.get("SENSOR_LIST_FILE", current_app.root_path+"/sensor_files/current_list.conf")
         with open(sensor_list_file, "r") as f:
             sensor_list = {lst[0]: lst[1] for lst in f.readline().split('\t')}
         return sensor_list
