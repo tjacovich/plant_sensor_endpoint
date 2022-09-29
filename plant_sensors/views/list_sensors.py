@@ -23,7 +23,7 @@ class SensorsView(BaseView):
         return sensor_added
 
     def get(self, sensor_type):
-        response = self.get_sensor_list()
+        response = self.get_sensor_list(sensor_type=sensor_type)
         if True:
             return response, 200
         
