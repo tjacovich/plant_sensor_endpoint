@@ -5,7 +5,7 @@ Application
 import logging.config
 
 from werkzeug.serving import run_simple
-from .views import TemperatureView, HumidityView, MoistureView
+from .views import TemperatureView, HumidityView, MoistureView, SensorsView
 from flask_restful import Api
 from flask import request, Flask
 from flask_discoverer import Discoverer

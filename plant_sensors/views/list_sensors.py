@@ -12,13 +12,25 @@ class SensorsView(Resource):
         return sensor_list
     
     @classmethod
-    def poll_sensors(self, connection):
-
+    def poll_sensors(self):
+        sensor_list = {}
+        return sensor_list
     
-    def get(self, type):
+    @classmethod
+    def add_sensor(self):
+        sensor_added = {}
+        return sensor_added
 
+    def get(self, type):
+        if True:
             return response, 200
         
         else:
             return response, 500
 
+    def put(self, type):
+        if True:
+            return response, 200
+        
+        else:
+            return response, 500
