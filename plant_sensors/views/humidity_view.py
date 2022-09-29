@@ -12,13 +12,19 @@ import sys
 
 class HumidityView(BaseView):
     @classmethod
-    def init_connection(self, pin="D4"):
+    def init_connection(self, sensor_name="H0"):
         # Initial the dht device
         try:
-            pin_name = getattr(sys.modules["board"], pin)
+            location = self.get_sensor_location(sensor_name)
+            try:
+                pin_name = getattr(sys.modules["board"], location)
+            except:
+                current_app.logger.warning("Could not get pin name")
+                pin_name = board.D4
         except:
-            current_app.logger.warning("Could not get pin name")
-            pin_name = board.D4
+            current_app.logger.error("Failed to set pin name. Stopping.")
+            raise Exception
+
         return adafruit_dht.DHT11(pin_name)
 
     def get_humidity(self, dhtDevice):
@@ -46,7 +52,8 @@ class HumidityView(BaseView):
         return {"error":"Failed Collect humidity from sensor"}
 
     def get(self):
-        dhtDevice = self.init_connection()
+        params = request.args.to_dict()
+        dhtDevice = self.init_connection(sensor_name=params.get("name"))
         response = self.get_humidity(dhtDevice)
         dhtDevice.exit()
         
