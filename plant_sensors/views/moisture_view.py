@@ -35,5 +35,5 @@ class MoistureView(Resource):
             return response, 200
         
         else:
-            return respons, 500
+            return response, 500
 
