@@ -7,12 +7,22 @@ from flask_restful import Resource
 import requests
 import board
 import adafruit_dht
+import time
 
-class TemperatureView(Resource):
+class TemperatureView(BaseView):
     @classmethod
-    def init_connection(self, pin=board.D4):
-        # Initialize the dht device
-        return adafruit_dht.DHT11(pin)
+    def init_connection(self, sensor_name="T0"):
+        # Initial the dht device
+        try:
+            location = self.get_sensor_location(sensor_name)
+            try:
+                pin_name = getattr(sys.modules["board"], location)
+            except:
+                current_app.logger.warning("Could not get pin name. Assuming pin D4")
+                pin_name = board.D4
+        except:
+            current_app.logger.error("Failed to set pin name. Stopping.")
+            raise Exception
 
     def get_temperature(self, dhtDevice, celsius=True):
         retries = current_app.config.get("N_RETRIES", 3)
@@ -42,7 +52,8 @@ class TemperatureView(Resource):
         return {"error":"Failed Collect Temperature from sensor"}
 
     def get(self):
-        dhtDevice = self.init_connection()
+        params = request.args.to_dict()
+        dhtDevice = self.init_connection(sensor_name=params.get("name"))        
         response = self.get_temperature(dhtDevice)
         dhtDevice.exit()
         

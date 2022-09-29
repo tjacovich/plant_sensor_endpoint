@@ -47,7 +47,7 @@ def create_app(**config):
     
     api.add_resource(SensorsView,
                     '/sensors/available/<string:sensor_type>',
-                    methods=['GET','PUT'])
+                    methods=['GET','POST'])
                 
     return app
        

@@ -30,7 +30,7 @@ class SensorsView(BaseView):
         else:
             return response, 500
 
-    def put(self, sensor_type):
+    def post(self, sensor_type):
         if True:
             return response, 200
         
