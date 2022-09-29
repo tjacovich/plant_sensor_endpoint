@@ -3,7 +3,7 @@ import time
 import json
 from flask import request, current_app, make_response, jsonify
 from flask_restful import Resource
-from .views import BaseView
+from .base_view import BaseView
 import requests
 
 class SensorsView(BaseView):
@@ -23,7 +23,7 @@ class SensorsView(BaseView):
         return sensor_added
 
     def get(self, sensor_type):
-        response = self.get_sensor_list(self)
+        response = self.get_sensor_list()
         if True:
             return response, 200
         
