@@ -21,14 +21,14 @@ class SensorsView(Resource):
         sensor_added = {}
         return sensor_added
 
-    def get(self, type):
+    def get(self, sensor_type):
         if True:
             return response, 200
         
         else:
             return response, 500
 
-    def put(self, type):
+    def put(self, sensor_type):
         if True:
             return response, 200
         
