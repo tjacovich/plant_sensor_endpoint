@@ -3,14 +3,19 @@ import time
 import json
 from flask import request, current_app, make_response, jsonify
 from flask_restful import Resource
+from .base_view import BaseView
 import requests
 
-class MoistureView(Resource):
+class MoistureView(BaseView):
     @classmethod
-    def init_connection(self):
+    def init_connection(self, sensor_name="M0"):
         # open a serial connection
         current_app.logger.info("Initializing connection to Pico")
-        device_location = current_app.config.get("DEVICE_LOCATION", "/dev/ttyACM0")
+        try:
+            device_location = self.get_sensor_location(sensor_name)
+        except:
+            current_app.logger.warning("Failed to get sensor data from sensors file. Falling back to config file.")
+            device_location = current_app.config.get("DEVICE_LOCATION", "/dev/ttyACM0")
         s = serial.Serial(device_location, 115200)
         s.timeout = 3
         return s
