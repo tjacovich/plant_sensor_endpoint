@@ -9,6 +9,7 @@ import board
 import adafruit_dht
 from .base_view import BaseView
 import time
+import sys
 
 class TemperatureView(BaseView):
     @classmethod
