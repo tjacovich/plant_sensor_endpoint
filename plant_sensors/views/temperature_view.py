@@ -7,6 +7,7 @@ from flask_restful import Resource
 import requests
 import board
 import adafruit_dht
+from .base_view import BaseView
 import time
 
 class TemperatureView(BaseView):
@@ -15,6 +16,7 @@ class TemperatureView(BaseView):
         # Initial the dht device
         try:
             location = self.get_sensor_location(sensor_name)
+            logger.info(f"Found pin location: {location}")
             try:
                 pin_name = getattr(sys.modules["board"], location)
             except:
@@ -23,6 +25,9 @@ class TemperatureView(BaseView):
         except:
             current_app.logger.error("Failed to set pin name. Stopping.")
             raise Exception
+
+        return adafruit_dht.DHT11(pin_name)
+
 
     def get_temperature(self, dhtDevice, celsius=True):
         retries = current_app.config.get("N_RETRIES", 3)
