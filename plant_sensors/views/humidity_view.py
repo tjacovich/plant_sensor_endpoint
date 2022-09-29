@@ -8,6 +8,7 @@ import requests
 import board
 import adafruit_dht
 from .base_view import BaseView
+import sys
 
 class HumidityView(BaseView):
     @classmethod
@@ -18,7 +19,7 @@ class HumidityView(BaseView):
         except:
             current_app.logger.warning("Could not get pin name")
             pin_name = board.D4
-        return adafruit_dht.DHT11(pin)
+        return adafruit_dht.DHT11(pin_name)
 
     def get_humidity(self, dhtDevice):
         retries = current_app.config.get("N_RETRIES", 3)
