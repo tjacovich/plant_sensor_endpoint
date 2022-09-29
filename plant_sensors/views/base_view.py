@@ -10,5 +10,11 @@ class BaseView(Resource):
         with open(sensor_list_file, "r") as f:
             for line in f:
                 sensor_description = json.loads(line)
-                sensor_list[sensor_description["name"]] = sensor_description["type"] 
-            return sensor_list
+                
+                if sensor_type == "all":
+                    sensor_list[sensor_description["name"]] = sensor_description["type"]
+
+                elif sensor_description["type"] == sensor_type:
+                    sensor_list[sensor_description["name"]] = sensor_description["type"]
+     
+        return sensor_list
