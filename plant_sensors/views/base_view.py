@@ -27,4 +27,4 @@ class BaseView(Resource):
                 sensor_description = json.loads(line)
 
                 if sensor_description["name"] == sensor_name:     
-                return sensor_description["location"]
+                    return sensor_description["location"]

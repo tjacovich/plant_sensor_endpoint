@@ -7,11 +7,17 @@ from flask_restful import Resource
 import requests
 import board
 import adafruit_dht
+from .base_view import BaseView
 
-class HumidityView(Resource):
+class HumidityView(BaseView):
     @classmethod
-    def init_connection(self, pin=board.D4):
+    def init_connection(self, pin="D4"):
         # Initial the dht device
+        try:
+            pin_name = getattr(sys.modules["board"], pin)
+        except:
+            current_app.logger.warning("Could not get pin name")
+            pin_name = board.D4
         return adafruit_dht.DHT11(pin)
 
     def get_humidity(self, dhtDevice):
