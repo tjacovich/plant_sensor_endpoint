@@ -21,7 +21,7 @@ class SensorsView(BaseView):
     def add_sensor(self, data):
         sensor_added = {}
         try:
-            with open(self.sensor_list_file, "a") as f:
+            with open(self.get_sensor_file(), "a") as f:
                 line = json.dumps(data)
                 f.write(line)
                 sensor_added = {"Added sensor: {}".format(line)}

@@ -3,7 +3,9 @@ from flask_restful import Resource
 import json
 
 class BaseView(Resource):
-    sensor_list_file = current_app.config.get("SENSOR_LIST_FILE", current_app.root_path+"/sensor_files/current_list.conf")
+    @classmethod
+    def get_sensor_file(self):
+        return current_app.config.get("SENSOR_LIST_FILE", current_app.root_path+"/sensor_files/current_list.conf")
 
     @classmethod
     def get_sensor_list(self, sensor_type="all"):
