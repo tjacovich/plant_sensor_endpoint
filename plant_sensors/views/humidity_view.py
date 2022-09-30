@@ -50,7 +50,7 @@ class HumidityView(BaseView):
         
         current_app.logger.error("Failed to collect humidity from sensor")
 
-        return {"error":"Failed Collect humidity from sensor"}
+        return {"error":"Failed to collect humidity from sensor"}
 
     def get(self):
         params = request.args.to_dict()
