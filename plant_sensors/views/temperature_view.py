@@ -17,7 +17,7 @@ class TemperatureView(BaseView):
         # Initial the dht device
         try:
             location = self.get_sensor_location(sensor_name)
-            logger.info(f"Found pin location: {location}")
+            current_app.logger.info(f"Found pin location: {location}")
             try:
                 pin_name = getattr(sys.modules["board"], location)
             except:

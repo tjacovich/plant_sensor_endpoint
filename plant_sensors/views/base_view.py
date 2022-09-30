@@ -10,7 +10,7 @@ class BaseView(Resource):
     @classmethod
     def get_sensor_list(self, sensor_type="all"):
         sensor_list = {}
-        with open(self.sensor_list_file, "r") as f:
+        with open(self.get_sensor_file(), "r") as f:
             for line in f:
                 sensor_description = json.loads(line)
                 
@@ -24,8 +24,7 @@ class BaseView(Resource):
 
     @classmethod
     def get_sensor_location(self, sensor_name):
-        sensor_list_file = current_app.config.get("SENSOR_LIST_FILE", current_app.root_path+"/sensor_files/current_list.conf")
-        with open(sensor_list_file, "r") as f:
+        with open(self.get_sensor_file(), "r") as f:
             for line in f:
                 sensor_description = json.loads(line)
 

@@ -38,7 +38,7 @@ class SensorsView(BaseView):
         else:
             return response, 500
 
-    def post(self):
+    def post(self, sensor_type):
         data = request.get_json(force=True)
         response = self.add_sensor(data)
         if response:
