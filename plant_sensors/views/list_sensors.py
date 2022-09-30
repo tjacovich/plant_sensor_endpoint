@@ -22,12 +22,12 @@ class SensorsView(BaseView):
         sensor_added = {}
         try:
             with open(self.get_sensor_file(), "a") as f:
-                line = json.dumps(data)
-                f.write(line)
-                sensor_added = {"Added sensor: {}".format(line)}
+                f.write("\n")
+                json.dump(data, f)
+                sensor_added = {"Added sensor": "{}".format(data)}
         except Exception as e:
-            logger.error("Failed to add sensor with error: {}".format(e))
-            sensor_added = {"error":"Failed to add sensor {}".format(line)}
+            current_app.logger.error("Failed to add sensor with error: {}".format(e))
+            sensor_added = {"error":"Failed to add sensor {}".format(data)}
         return sensor_added
 
     def get(self, sensor_type):
