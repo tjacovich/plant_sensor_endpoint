@@ -18,8 +18,16 @@ class SensorsView(BaseView):
         return sensor_list
     
     @classmethod
-    def add_sensor(self):
+    def add_sensor(self, data):
         sensor_added = {}
+        try:
+            with open(self.sensor_list_file, "a") as f:
+                line = json.dumps(data)
+                f.write(line)
+                sensor_added = {"Added sensor: {}".format(line)}
+        except Exception as e:
+            logger.error("Failed to add sensor with error: {}".format(e))
+            sensor_added = {"error":"Failed to add sensor {}".format(line)}
         return sensor_added
 
     def get(self, sensor_type):
@@ -30,9 +38,11 @@ class SensorsView(BaseView):
         else:
             return response, 500
 
-    def post(self, sensor_type):
-        if True:
+    def post(self):
+        data = request.get_json(force=True)
+        response = self.add_sensor(data)
+        if response:
             return response, 200
         
         else:
-            return response, 500
+            return response, 400
